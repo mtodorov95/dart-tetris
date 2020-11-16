@@ -133,4 +133,17 @@ class Game {
     context.fillStyle = 'grey';
     context.fillRect(0, 0, board.width, board.height);
   }
+
+  void handleKeyDown(Timer timer) {
+    document.onKeyDown.listen((event) {
+      if (timer.isActive) {
+        if (event.keyCode == 37) pieceMoving('left');
+        if (event.keyCode == 38) pieceMoving('rotate');
+        if (event.keyCode == 39) pieceMoving('right');
+        if (event.keyCode == 40) pieceMoving('down');
+        if (event.keyCode == 32) while (pieceMoving('down')) {}
+        ;
+      }
+    });
+  }
 }
