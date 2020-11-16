@@ -3,7 +3,7 @@ part of tetris;
 class Game {
   CanvasElement board;
   Element gameScore;
-  Shape currentBlock;
+  Shape currentShape;
 
   static int width = 10;
   static int height = 20;
@@ -64,5 +64,49 @@ class Game {
         linesCleared++;
       }
     }
+  }
+
+  bool validMove() {
+    for (Tile tile in currentShape.tiles) {
+      if (tile.x >= width ||
+          tile.x < 0 ||
+          tile.y >= height ||
+          tile.y < 0 ||
+          boardState[tile.x][tile.y] == 1) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  bool pieceMoving(String s) {
+    bool pieceIsMoving = true;
+    context.fillStyle = 'grey';
+    currentShape.tiles.forEach((Tile tile) {
+      context.fillRect(
+          tile.x * cellSize, tile.y * cellSize, cellSize, cellSize);
+    });
+
+    if (s == 'rotate') {
+      currentShape.rotateRight();
+    } else {
+      currentShape.move(s);
+    }
+
+    if (!(pieceIsMoving = validMove())) {
+      if (s == 'rotate') currentShape.rotateLeft();
+      if (s == 'left') currentShape.move('roght');
+      if (s == 'right') currentShape.move('left');
+      if (s == 'down') currentShape.move('up');
+      if (s == 'up') currentShape.move('down');
+    }
+
+    context.fillStyle = currentShape.color;
+    currentShape.tiles.forEach((tile) {
+      context.fillRect(
+          tile.x * cellSize, tile.y * cellSize, cellSize, cellSize);
+    });
+
+    return pieceIsMoving;
   }
 }
