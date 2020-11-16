@@ -22,4 +22,47 @@ class Game {
     boardState =
         List<int>(width).map((_) => List<int>.filled(height, 0)).toList();
   }
+
+  Shape getRandomPiece() {
+    int randomInt = Random().nextInt(7);
+    switch (randomInt) {
+      case 0:
+        return IShape(width: width);
+      case 1:
+        return OShape(width: width);
+      case 2:
+        return JShape(width: width);
+      case 3:
+        return LShape(width: width);
+      case 4:
+        return TShape(width: width);
+      case 5:
+        return ZShape(width: width);
+      case 6:
+        return SShape(width: width);
+    }
+  }
+
+  void clearRows() {
+    for (int index = 0; index < rowState.length; index++) {
+      int row = rowState[index];
+
+      if (row == width) {
+        ImageData imageData =
+            context.getImageData(0, 0, cellSize * width, cellSize * index);
+        context.putImageData(imageData, 0, cellSize);
+
+        for (int y = index; y > 0; y--) {
+          for (int x = 0; x < width; x++) {
+            boardState[x][y] = boardState[x][y - 1];
+          }
+          rowState[y] = rowState[y - 1];
+        }
+
+        rowState[0] = 0;
+        boardState.forEach((col) => col[0] = 0);
+        linesCleared++;
+      }
+    }
+  }
 }
