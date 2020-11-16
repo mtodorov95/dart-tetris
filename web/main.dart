@@ -1,5 +1,6 @@
 import 'dart:html';
+import 'package:tetris/tetris.dart';
 
 void main() {
-  querySelector('#output').text = 'Your app is running.';
+  Game().start();
 }

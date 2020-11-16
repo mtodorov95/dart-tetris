@@ -146,4 +146,16 @@ class Game {
       }
     });
   }
+
+  void start() {
+    initializeCanvas();
+    Element entryPoint = querySelector('#output');
+    entryPoint.nodes.add(board);
+    entryPoint.nodes.add(gameScore);
+
+    Timer timer = Timer.periodic(Duration(milliseconds: 500), updateGame);
+
+    currentShape = getRandomPiece();
+    handleKeyDown(timer);
+  }
 }
