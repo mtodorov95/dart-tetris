@@ -109,4 +109,28 @@ class Game {
 
     return pieceIsMoving;
   }
+
+  void updateGame(Timer timer) {
+    gameScore.setInnerHtml('<p>Score: ${linesCleared}</p>');
+    if (!pieceMoving('down')) {
+      currentShape.tiles.forEach((tile) {
+        boardState[tile.x][tile.y] = 1;
+        rowState[tile.y]++;
+      });
+      clearRows();
+      currentShape = getRandomPiece();
+      if (!pieceMoving('down')) {
+        timer.cancel();
+      }
+    }
+  }
+
+  void initializeCanvas() {
+    board = Element.html('<canvas/>');
+    board.width = width * cellSize;
+    board.height = height * cellSize;
+    context = board.context2D;
+    context.fillStyle = 'grey';
+    context.fillRect(0, 0, board.width, board.height);
+  }
 }
