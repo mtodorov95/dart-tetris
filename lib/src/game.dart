@@ -95,7 +95,7 @@ class Game {
 
     if (!(pieceIsMoving = validMove())) {
       if (s == 'rotate') currentShape.rotateLeft();
-      if (s == 'left') currentShape.move('roght');
+      if (s == 'left') currentShape.move('right');
       if (s == 'right') currentShape.move('left');
       if (s == 'down') currentShape.move('up');
       if (s == 'up') currentShape.move('down');
